@@ -4,36 +4,23 @@ import { SxProps, Theme } from "@mui/system";
 
 interface ButtonProps {
   text: string;
-  onClick?: () => {};
+  onClick?: () => void;
   type?: string;
   variant: "text" | "contained" | "outlined";
-  sx: SxProps<Theme>;
+  sx?: SxProps<Theme>;
 }
-// const CommonButton = ({children, className = ""} : {children: any, className: string,}) => {
-//   return (
-//     <>
-//       <button
-//         data-modal-target="authentication-modal"
-//         data-modal-toggle="authentication-modal"
-//         className="text-linear-gradient-2"
-//         type="button"
-//       >
-//         {children}
-//       </button>
-//     </>
-//   );
-// };
+
 const CommonButton: React.FC<ButtonProps> = (props) => {
   const {
     text = "Submit",
-    type = "submit",
+    type = "button",
     onClick = () => {},
     variant = "contained",
     sx,
   } = props;
   return (
     <>
-      <Button variant={variant} onClick={onClick} sx={sx}>
+      <Button href="" type={type} variant={variant} onClick={onClick} sx={sx}>
         {text}
       </Button>
     </>

@@ -8,6 +8,7 @@ export default {
       "linear-gradient-2": "#EAA79E",
       "linear-gradient-dark": "#DF9186",
       "linear-gray": "#334144",
+      "light-gray": "#949EA0",
     },
     fontFamily: {
       sans: ["Graphik", "sans-serif"],

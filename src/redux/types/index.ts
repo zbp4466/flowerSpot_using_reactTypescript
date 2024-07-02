@@ -1,0 +1,4 @@
+export const INCREMENT = "INCREMENT";
+export const DECREMENT = "DECREMENT";
+export const SET_USER_DETAILS = "SET_USER_DETAILS";
+export const REMOVE_USER_DETAILS = "REMOVE_USER_DETAILS";

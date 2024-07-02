@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import star from "../../assets/star.svg";
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux/reducers";
+import { useDispatch } from "react-redux";
 
 interface flowerItemsProps {
   id: number;
@@ -12,8 +16,9 @@ interface flowerItemsProps {
   };
 }
 const FlowerItemsMappedComp: React.FC<flowerItemsProps> = (props) => {
-  const { id, elem } = props;
-  console.log("props :>> ", props);
+  const userDetails = useSelector((state: AppState) => state.user.userDetails);
+  const { elem } = props;
+
   return (
     <>
       <div
@@ -34,15 +39,16 @@ const FlowerItemsMappedComp: React.FC<flowerItemsProps> = (props) => {
         }}
       >
         <div className="favorite-flower-item  w-fit absolute  top-1 right-0">
-          <img src="star.svg" className="" alt="" />
+          {userDetails && <img src={star} className="" alt="" />}
         </div>
+
         <div className="flower-info flex flex-col justify-center items-center gap-5 mb-8 ">
           <div className="flower-name-box ">
-            <h1 className="text-2xl">Balloon Flower</h1>
-            <p className="italic">platycodon grandiflorus</p>
+            <h1 className="text-2xl">{elem.name}</h1>
+            <p className="italic">{elem.latin_name}</p>
           </div>
           <div className="sightings-info-box bg-[#0000006b] w-36 p-2 rounded-full hover:bg-linear-gradient-2 hover:cursor-pointer">
-            <p>127 sightings</p>
+            <p>{elem.sightings}</p>
           </div>
         </div>
       </div>

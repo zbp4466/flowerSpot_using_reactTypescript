@@ -3,26 +3,29 @@ import React, { useEffect, useState } from "react";
 import FlowerItemsMappedComp from "./FlowerItemsMappedComp";
 import "./flowers.css";
 import Loader from "../../components/Loader";
+import axiosInstance from "../../config/http.config";
 
-const Flowers: React.FC = () => {
-  interface flowerListObject {
-    id: number;
-    name: string;
-    latin_name: string;
-    sightings: number;
-    profile_picture: string;
-    favorite: boolean;
-  }
+interface flowerListObject {
+  id: number;
+  name: string;
+  latin_name: string;
+  sightings: number;
+  profile_picture: string;
+  favorite: boolean;
+}
+interface NavbarProps {
+  progressBar: boolean;
+}
 
+const Flowers: React.FC<NavbarProps> = (props) => {
+  const { progressBar } = props;
   const [flowerList, setFlowerList] = useState<flowerListObject[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const url = "https://flowrspot-api.herokuapp.com";
 
   const fetchFlowerList = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${url}/api/v1/flowers`);
+      const response = await axiosInstance.get(`flowers`);
       setFlowerList(response.data.flowers);
       setIsLoading(false);
     } catch (error) {
@@ -30,8 +33,6 @@ const Flowers: React.FC = () => {
       setIsLoading(false);
     }
   };
-
-  console.log({ flowerList });
 
   useEffect(() => {
     fetchFlowerList();

@@ -1,6 +1,6 @@
 import { SxProps, Theme } from "@mui/system";
 import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
@@ -22,20 +22,21 @@ interface DatePickerProps {
   isDisabled?: boolean;
   disablePast?: boolean;
   control?: any;
+  rules?: any;
 }
 
 const CommonDatePicker: React.FC<DatePickerProps> = (props) => {
   const {
     defaultValue,
     label,
-    isError = false,
     fullWidth = true,
     isDisabled = false,
-    disableFuture = false,
+    disableFuture = true,
     disablePast = false,
     control,
     variant = "filled",
     name,
+    rules = {},
   } = props;
 
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -45,16 +46,9 @@ const CommonDatePicker: React.FC<DatePickerProps> = (props) => {
       <Controller
         control={control}
         name={name}
+        rules={rules}
         render={({ field, fieldState: { error } }) => (
           <LocalizationProvider dateAdapter={AdapterMoment}>
-            {/* <DateField
-          id={id}
-          name={name}
-          label={label}
-          variant={variant}
-          sx={sx}
-          onChange={onChange}
-        /> */}
             <DesktopDatePicker
               open={isOpen}
               onOpen={() => !isOpen && setIsOpen(true)}
@@ -72,7 +66,8 @@ const CommonDatePicker: React.FC<DatePickerProps> = (props) => {
                   size: "small",
                   color: "primary",
                   fullWidth: fullWidth,
-                  error: isError,
+                  error: !!error,
+                  helperText: error ? error.message : "",
                   variant: variant,
                   onClick: () => setIsOpen(true),
                   placeholder: label,
@@ -94,69 +89,3 @@ const CommonDatePicker: React.FC<DatePickerProps> = (props) => {
 };
 
 export default CommonDatePicker;
-
-// import moment from 'moment';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-// import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-// import React from 'react';
-
-// const DatePickerField = (props: any) => {
-//   const {
-//     defaultValue,
-//     onChange,
-//     label,
-//     isError = false,
-//     fullWidth = true,
-//     isDisabled = false,
-//     disableFuture = false,
-//     disablePast = false,
-//     minDate,
-//     maxDate,
-//     variant = "filled",
-//     name
-//   } = props
-
-//   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-
-//   return (
-//     <LocalizationProvider dateAdapter={AdapterMoment}>
-//       <DesktopDatePicker
-//         open={isOpen}
-//         onOpen={() => !isOpen && setIsOpen(true)}
-//         onClose={() => setIsOpen(false)}
-//         defaultValue={defaultValue ? moment(defaultValue) : undefined}
-//         label={label}
-//         format='DD MMM YYYY'
-//         onChange={(date) => {
-//           if (onChange) {
-//             onChange(date, name);
-//           }
-//         }}
-//         disabled={isDisabled}
-//         slotProps={{
-//           textField: {
-//             size: 'small',
-//             color: 'primary',
-//             fullWidth: fullWidth,
-//             error: isError,
-//             variant: variant,
-//             onClick: () => setIsOpen(true),
-//             placeholder: label
-//           },
-//           actionBar: {
-//             actions: ['today', 'clear', 'accept'],
-//           },
-//         }}
-//         disableFuture={disableFuture}
-//         disablePast={disablePast}
-//         maxDate={maxDate ? moment(maxDate) : undefined}
-//         minDate={minDate ? moment(minDate) : undefined}
-//         closeOnSelect
-//         views={['year', 'month', 'day']}
-//       />
-//     </LocalizationProvider>
-//   )
-// }
-
-// export default DatePickerField
