@@ -7,6 +7,7 @@ import { SxProps, Theme } from "@mui/system";
 import axios from "axios";
 import toast from "react-hot-toast";
 import axiosInstance from "../../config/http.config";
+import cancelIcon from "../../assets/cancel.svg";
 
 interface FormData {
   email: string;
@@ -16,11 +17,18 @@ interface FormData {
 interface LoginProps {
   setToggleLoginModal: Dispatch<SetStateAction<boolean>>;
   setToggleLoginSuccessModal: Dispatch<SetStateAction<boolean>>;
+  setToggleRegisterModal: Dispatch<SetStateAction<boolean>>;
+  setToggleForgotPasswordModal: Dispatch<SetStateAction<boolean>>;
 }
 
 // const Login = ({ setToggleLoginModal }: LoginProps) => {
 const Login: React.FC<LoginProps> = (props) => {
-  const { setToggleLoginModal, setToggleLoginSuccessModal } = props;
+  const {
+    setToggleLoginModal,
+    setToggleLoginSuccessModal,
+    setToggleRegisterModal,
+    setToggleForgotPasswordModal,
+  } = props;
 
   const { handleSubmit, control, setError } = useForm<FormData>({
     defaultValues: {
@@ -62,6 +70,19 @@ const Login: React.FC<LoginProps> = (props) => {
       });
     }
   };
+  const onClickCancelLoginModal = () => {
+    setToggleLoginModal(false);
+  };
+
+  const onClickForgotPassword = () => {
+    setToggleForgotPasswordModal(true);
+    setToggleLoginModal(false);
+  };
+
+  const onClickCreateNewAccount = () => {
+    setToggleLoginModal(false);
+    setToggleRegisterModal(true);
+  };
 
   const buttonSx: SxProps<Theme> = {
     backgroundColor: "#DF9186",
@@ -73,12 +94,14 @@ const Login: React.FC<LoginProps> = (props) => {
   return (
     <>
       <div className="mt-3 text-center sm:mt-0 ">
-        <h3
-          className="text-2xl  font-semibold leading-6 text-linear-gray "
-          id="modal-title"
-        >
-          Welcome Back
-        </h3>
+        <div className="cancel-box  w-fit  absolute right-2 top-2">
+          <img
+            className="w-8 rounded-full  hover:cursor-pointer hover:bg-linear-gradient"
+            src={cancelIcon}
+            alt=""
+            onClick={onClickCancelLoginModal}
+          />
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-3 mt-5 w-96"
@@ -113,8 +136,14 @@ const Login: React.FC<LoginProps> = (props) => {
               },
             }}
           />
+          <p
+            className="text-start underline w-fit  hover:cursor-pointer hover:text-linear-gradient-dark"
+            onClick={onClickForgotPassword}
+          >
+            Forgot Your Password?
+          </p>
           <CommonButton
-            text="Create Account"
+            text="Login to your Account"
             type="submit"
             variant="contained"
             sx={buttonSx}
@@ -126,10 +155,12 @@ const Login: React.FC<LoginProps> = (props) => {
         >
           <p>OR</p>
           <p
-            className="text-center  hover:text-linear-gradient-dark hover:cursor-pointer "
-            onClick={() => setToggleLoginModal(false)}
+            className="underline w-fit m-auto hover:text-linear-gradient-dark hover:cursor-pointer "
+            // onClick={() => setToggleLoginModal(false)}
+            onClick={onClickCreateNewAccount}
           >
-            I don't want to login
+            {/* I don't want to login */}
+            Create a new account
           </p>
         </div>
       </div>

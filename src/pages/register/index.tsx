@@ -7,6 +7,7 @@ import CommonDatePicker from "../../components/CommonDatePicker";
 import { SxProps, Theme } from "@mui/system";
 import axios from "axios";
 import axiosInstance from "../../config/http.config";
+import cancelIcon from "../../assets/cancel.svg";
 
 interface FormData {
   first_name: string;
@@ -19,10 +20,15 @@ interface FormData {
 interface LoginProps {
   setToggleRegisterModal: Dispatch<SetStateAction<boolean>>;
   setToggleRegisterSuccessModal: Dispatch<SetStateAction<boolean>>;
+  setToggleLoginModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const Register: React.FC<LoginProps> = (props) => {
-  const { setToggleRegisterModal, setToggleRegisterSuccessModal } = props;
+  const {
+    setToggleRegisterModal,
+    setToggleRegisterSuccessModal,
+    setToggleLoginModal,
+  } = props;
   const { handleSubmit, control } = useForm<FormData>({
     defaultValues: {
       first_name: "",
@@ -43,6 +49,14 @@ const Register: React.FC<LoginProps> = (props) => {
     }
   };
 
+  const onClickAlreadyHaveAccount = () => {
+    setToggleRegisterModal(false);
+    setToggleLoginModal(true);
+  };
+
+  const onClickCancelRegisterModal = () => {
+    setToggleRegisterModal(false);
+  };
   const dateFieldSx: SxProps<Theme> = {
     width: "100%",
   };
@@ -57,12 +71,14 @@ const Register: React.FC<LoginProps> = (props) => {
   return (
     <>
       <div className="mt-3 text-center  sm:mt-0 ">
-        <h3
-          className="text-2xl font-semibold leading-6 text-linear-gray "
-          id="modal-title"
-        >
-          Create An Account
-        </h3>
+        <div className="cancel-box  w-fit  absolute right-2 top-2">
+          <img
+            className="w-8 rounded-full  hover:cursor-pointer hover:bg-linear-gradient"
+            src={cancelIcon}
+            alt=""
+            onClick={onClickCancelRegisterModal}
+          />
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-3 mt-5 "
@@ -156,10 +172,11 @@ const Register: React.FC<LoginProps> = (props) => {
         >
           <p>OR</p>
           <p
-            className="text-center  hover:text-linear-gradient-dark hover:cursor-pointer "
-            onClick={() => setToggleRegisterModal(false)}
+            className="w-fit m-auto underline  hover:text-linear-gradient-dark hover:cursor-pointer "
+            // onClick={() => setToggleRegisterModal(false)}
+            onClick={onClickAlreadyHaveAccount}
           >
-            I don't want to register
+            Already have an account ?
           </p>
         </div>
       </div>

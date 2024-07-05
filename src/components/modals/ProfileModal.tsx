@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import profileIcon from "../../assets/profile.svg";
 import CommonButton from "../CommonButton";
 import cancelIcon from "../../assets/cancel.svg";
-import axios from "axios";
+// import axios from "axios";
 import Loader from "../Loader";
 import { SxProps, Theme } from "@mui/system";
 import { useAppDispatch } from "../../redux/hooks/hook";
@@ -45,7 +45,7 @@ const ProfileModal: React.FC<ProfileProps> = (props) => {
         <div className="profile-main-container">
           <div className="cancel-box  w-fit  absolute right-2 top-2">
             <img
-              className="w-8 text-light-gray hover:cursor-pointer"
+              className="w-8 rounded-full hover:cursor-pointer hover:bg-linear-gradient"
               src={cancelIcon}
               alt=""
               onClick={onClickCancelProfileModal}

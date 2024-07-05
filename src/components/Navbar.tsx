@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import flower from "../assets/flower.svg";
-import Button from "./CommonButton";
+
 import { useEffect, useState } from "react";
 import Login from "../pages/login";
 import profileIcon from "../assets/profile.svg";
@@ -19,6 +19,8 @@ import Register from "../pages/register";
 import CommonModal from "./modals/CommonModal";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hook";
 import { setUserDetails } from "../redux/reducers/authReducer";
+import ForgotPasswordModal from "./modals/ForgotPasswordModal";
+import ResetPasswordModal from "./modals/ResetPasswordModal";
 
 interface NavbarProps {
   setProgressBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,6 +37,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [toggleRegisterSuccessModal, setToggleRegisterSuccessModal] =
     useState<boolean>(false);
   const [toggleLoginModal, setToggleLoginModal] = useState<boolean>(false);
+  const [toggleForgotPasswordModal, setToggleForgotPasswordModal] =
+    useState<boolean>(false);
+  const [toggleResetPasswordModal, setToggleResetPasswordModal] =
+    useState<boolean>(false);
   const [toggleLoginSuccessModal, setToggleLoginSuccessModal] =
     useState<boolean>(false);
   const [profile, setProfile] = useState<boolean>(false);
@@ -133,10 +139,12 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
       {toggleRegisterModal && (
         <CommonModal
+          title="Create an Account"
           body={
             <Register
               setToggleRegisterModal={setToggleRegisterModal}
               setToggleRegisterSuccessModal={setToggleRegisterSuccessModal}
+              setToggleLoginModal={setToggleLoginModal}
             />
           }
         />
@@ -153,10 +161,36 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       )}
       {toggleLoginModal && (
         <CommonModal
+          title="Welcome Back"
           body={
             <Login
               setToggleLoginModal={setToggleLoginModal}
               setToggleLoginSuccessModal={setToggleLoginSuccessModal}
+              setToggleRegisterModal={setToggleRegisterModal}
+              setToggleForgotPasswordModal={setToggleForgotPasswordModal}
+            />
+          }
+        />
+      )}
+      {toggleForgotPasswordModal && (
+        <CommonModal
+          title="
+          Enter your email and we will send you a link to reset your password."
+          body={
+            <ForgotPasswordModal
+              setToggleForgotPasswordModal={setToggleForgotPasswordModal}
+              setToggleLoginModal={setToggleLoginModal}
+            />
+          }
+        />
+      )}
+      {toggleResetPasswordModal && (
+        <CommonModal
+          title="
+          Reset Your Password"
+          body={
+            <ResetPasswordModal
+              setToggleResetPasswordModal={setToggleResetPasswordModal}
             />
           }
         />

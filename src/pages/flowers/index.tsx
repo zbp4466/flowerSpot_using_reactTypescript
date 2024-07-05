@@ -14,7 +14,7 @@ interface flowerListObject {
   favorite: boolean;
 }
 interface NavbarProps {
-  progressBar: boolean;
+  progressBar?: boolean;
 }
 
 const Flowers: React.FC<NavbarProps> = (props) => {
