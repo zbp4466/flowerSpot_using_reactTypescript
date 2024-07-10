@@ -73,7 +73,7 @@ const Register: React.FC<LoginProps> = (props) => {
       <div className="mt-3 text-center  sm:mt-0 ">
         <div className="cancel-box  w-fit  absolute right-2 top-2">
           <img
-            className="w-8 rounded-full  hover:cursor-pointer hover:bg-linear-gradient"
+            className="w-8 rounded-lg  hover:cursor-pointer hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
             src={cancelIcon}
             alt=""
             onClick={onClickCancelRegisterModal}

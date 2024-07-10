@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import star from "../../assets/star.svg";
 import { useSelector } from "react-redux";
-import { AppState } from "../../redux/reducers";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../redux/hooks/hook";
 
 interface flowerItemsProps {
   id: number;
@@ -16,26 +16,20 @@ interface flowerItemsProps {
   };
 }
 const FlowerItemsMappedComp: React.FC<flowerItemsProps> = (props) => {
-  const userDetails = useSelector((state: AppState) => state.user.userDetails);
+  const userDetails = useAppSelector((state) => state.user.userDetails);
   const { elem } = props;
 
   return (
     <>
       <div
-        className="flower-items-mapped-container rounded-md relative "
+        className="rounded-md bg-auto relative border-2 border-black text-white text-center flex flex-col justify-end md:min-w-72 sm:min-w-72 "
         style={{
           backgroundImage: `url(${elem.profile_picture})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           height: "60vh",
-          width: "20vw",
-          color: "white",
-          textAlign: "center",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "end",
-          bottom: "10",
-          gap: "15px",
+          width: "22vw",
+          // minWidth: "18rem",
         }}
       >
         <div className="favorite-flower-item  w-fit absolute  top-1 right-0">

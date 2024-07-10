@@ -6,7 +6,7 @@ import cancelIcon from "../../assets/cancel.svg";
 import Loader from "../Loader";
 import { SxProps, Theme } from "@mui/system";
 import { useAppDispatch } from "../../redux/hooks/hook";
-import { removeUserDetails } from "../../redux/reducers/authReducer";
+import { removeUserDetails } from "../../redux/createSlice/authSlice";
 // import { useDispatch } from "react-redux";
 // import { removeUserDetails } from "../../redux/actions/authAction";
 
@@ -45,7 +45,7 @@ const ProfileModal: React.FC<ProfileProps> = (props) => {
         <div className="profile-main-container">
           <div className="cancel-box  w-fit  absolute right-2 top-2">
             <img
-              className="w-8 rounded-full hover:cursor-pointer hover:bg-linear-gradient"
+              className="w-8 rounded-lg hover:cursor-pointer hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
               src={cancelIcon}
               alt=""
               onClick={onClickCancelProfileModal}
