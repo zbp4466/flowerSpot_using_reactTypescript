@@ -7,7 +7,9 @@ import { SxProps, Theme } from "@mui/system";
 import axios from "axios";
 import toast from "react-hot-toast";
 import axiosInstance from "../../config/http.config";
-import cancelIcon from "../../assets/cancel.svg";
+import cancelIcon from "../../assets/image/cancel.svg";
+import { isBrowser, isMobile } from "react-device-detect";
+import { useDispatch } from "react-redux";
 
 interface FormData {
   email: string;
@@ -42,8 +44,9 @@ const Login: React.FC<LoginProps> = (props) => {
       const response = await axiosInstance.post(`users/login`, data);
       setToggleLoginModal(false);
       setToggleLoginSuccessModal(true);
-      console.log("response.data :>> ", response.data);
+
       localStorage.setItem("token", response.data.auth_token);
+      // localStorage.setItem("userDetails", response.config.data);
 
       // setIsLoading(false);
     } catch (error) {
@@ -93,75 +96,86 @@ const Login: React.FC<LoginProps> = (props) => {
   };
   return (
     <>
-      <div className="mt-3 text-center sm:mt-0 ">
-        <div className="cancel-box  w-fit  absolute right-2 top-2">
-          <img
-            className="w-8 rounded-lg  hover:cursor-pointer hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            src={cancelIcon}
-            alt=""
-            onClick={onClickCancelLoginModal}
-          />
-        </div>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-3 mt-5 w-96"
-        >
-          <CommonTextField
-            id="email"
-            label="Email Address"
-            type="email"
-            name="email"
-            control={control}
-            variant="filled"
-            rules={{
-              required: "Email Address is required",
-              pattern: {
-                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                message: "Enter a valid email address",
-              },
-            }}
-          />
-          <CommonTextField
-            id="password"
-            label="Password"
-            type="password"
-            name="password"
-            control={control}
-            variant="filled"
-            rules={{
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters long",
-              },
-            }}
-          />
-          <p
-            className="text-start underline w-fit  hover:cursor-pointer hover:text-linear-gradient-dark"
-            onClick={onClickForgotPassword}
+      <div className=" mt-20  h-fit lg:mt-0">
+        <div className="p-5 w-fit m-auto  sm:p-0 ">
+          <h3
+            className="text-2xl text-center font-semibold leading-6 text-linear-gray"
+            id="modal-title"
           >
-            Forgot Your Password?
-          </p>
-          <CommonButton
-            text="Login to your Account"
-            type="submit"
-            variant="contained"
-            sx={buttonSx}
-          />
-        </form>
-        <div
-          className="flex flex-col gap-1 justify-center mt-5"
-          id="modal-title"
-        >
-          <p>OR</p>
-          <p
-            className="underline w-fit m-auto hover:text-linear-gradient-dark hover:cursor-pointer "
-            // onClick={() => setToggleLoginModal(false)}
-            onClick={onClickCreateNewAccount}
-          >
-            {/* I don't want to login */}
-            Create a new account
-          </p>
+            Welcome Back
+          </h3>
+          <div className="mt-3 text-center sm:mt-0 ">
+            {isBrowser && (
+              <div className="cancel-box  w-fit  absolute right-2 top-2">
+                <img
+                  className="w-8 rounded-lg  hover:cursor-pointer hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                  src={cancelIcon}
+                  alt=""
+                  onClick={onClickCancelLoginModal}
+                />
+              </div>
+            )}
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-3 mt-5 w-96"
+            >
+              <CommonTextField
+                id="email"
+                label="Email Address"
+                type="email"
+                name="email"
+                control={control}
+                variant="filled"
+                rules={{
+                  required: "Email Address is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                    message: "Enter a valid email address",
+                  },
+                }}
+              />
+              <CommonTextField
+                id="password"
+                label="Password"
+                type="password"
+                name="password"
+                control={control}
+                variant="filled"
+                rules={{
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters long",
+                  },
+                }}
+              />
+              <p
+                className="text-start underline w-fit  hover:cursor-pointer hover:text-linear-gradient-dark"
+                onClick={onClickForgotPassword}
+              >
+                Forgot Your Password ?
+              </p>
+              <CommonButton
+                text="Login to your Account"
+                type="submit"
+                variant="contained"
+                sx={buttonSx}
+              />
+            </form>
+            <div
+              className="flex flex-col gap-1 justify-center mt-5"
+              id="modal-title"
+            >
+              <p>OR</p>
+              <p
+                className="underline w-fit m-auto hover:text-linear-gradient-dark hover:cursor-pointer "
+                // onClick={() => setToggleLoginModal(false)}
+                onClick={onClickCreateNewAccount}
+              >
+                Create a new account
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </>

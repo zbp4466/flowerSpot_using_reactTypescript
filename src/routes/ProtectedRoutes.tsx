@@ -1,7 +1,5 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 import { useAppSelector } from "../redux/hooks/hook";
-import Login from "../pages/login";
-import CommonModal from "../components/modals/CommonModal";
 import { Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -14,7 +12,7 @@ const ProtectedRoutes: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (!userDetails) {
     toast.error("Please register yourself to access other pages");
-    return <Navigate to="/flowers" />;
+    return <Navigate to="/" />;
   }
   return <>{children}</>;
 };

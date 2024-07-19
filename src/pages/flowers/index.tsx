@@ -40,17 +40,25 @@ const Flowers: React.FC<NavbarProps> = (props) => {
 
   return (
     <>
-      <div className="m-auto pt-10 max-w-screen border-2 border-black ">
+      <div className=" p-5 sm:p-5 md:p-10 ">
         {isLoading ? (
           <Loader />
         ) : (
-          <div className="flower-items-container  w-fit border-2 border-black  mx-auto gap-5 place-items-center grid  lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3  ">
+          <div className="  grid grid-cols-2 gap-5   sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4  ">
             {flowerList?.map((elem) => {
               return (
                 <FlowerItemsMappedComp key={elem.id} id={elem.id} elem={elem} />
               );
             })}
           </div>
+
+          // <div className="flower-items-container  w-fit border-2 border-black  mx-auto gap-5 place-items-center grid  lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3  ">
+          //   {flowerList?.map((elem) => {
+          //     return (
+          //       <FlowerItemsMappedComp key={elem.id} id={elem.id} elem={elem} />
+          //     );
+          //   })}
+          // </div>
         )}
       </div>
     </>
