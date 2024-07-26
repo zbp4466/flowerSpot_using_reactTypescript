@@ -1,9 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import FlowerItemsMappedComp from "./FlowerItemsMappedComp";
+// import FlowerItemsMappedComp from "./FlowerItemsMappedComp";
 import "./flowers.css";
 import Loader from "../../components/Loader";
 import axiosInstance from "../../config/http.config";
+import CommonFlowerMappedComp from "../../components/CommonFlowerMappedComp";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hook";
+// import {
+//   removeStarBackgroundColor,
+//   setStarBackgroundColor,
+// } from "../../redux/createSlice/starBackgroundColorSlice";
 
 interface flowerListObject {
   id: number;
@@ -22,6 +28,12 @@ const Flowers: React.FC<NavbarProps> = (props) => {
   const [flowerList, setFlowerList] = useState<flowerListObject[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const dispatch = useAppDispatch();
+  // const starBackgroundColor = useAppSelector(
+  //   (state) => state.starBackgroundColor.bgColor
+  // );
+  // console.log("starBackgroundColor :>> ", starBackgroundColor);
+
   const fetchFlowerList = async () => {
     setIsLoading(true);
     try {
@@ -38,6 +50,33 @@ const Flowers: React.FC<NavbarProps> = (props) => {
     fetchFlowerList();
   }, []);
 
+  const clickStarButton = async (
+    id: number,
+    elem: any,
+    elemId: number,
+    setBgColor: React.Dispatch<React.SetStateAction<string>>,
+    bgColor: string
+  ) => {
+    try {
+      if (bgColor === "white") {
+        setBgColor("linear-gradient-2");
+        // dispatch(setStarBackgroundColor());
+        const response = await axiosInstance.post(
+          `flowers/${elem.id}/favorites`,
+          elem
+        );
+      } else {
+        // setBgColor("white");
+        // dispatch(removeStarBackgroundColor());
+        const response = await axiosInstance.delete(
+          `flowers/${elem.id}/favorites/${id}`
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className=" p-5 sm:p-5 md:p-10 ">
@@ -47,7 +86,12 @@ const Flowers: React.FC<NavbarProps> = (props) => {
           <div className="  grid grid-cols-2 gap-5   sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4  ">
             {flowerList?.map((elem) => {
               return (
-                <FlowerItemsMappedComp key={elem.id} id={elem.id} elem={elem} />
+                <CommonFlowerMappedComp
+                  key={elem.id}
+                  id={elem.id}
+                  elem={elem}
+                  onClickStarButton={clickStarButton}
+                />
               );
             })}
           </div>

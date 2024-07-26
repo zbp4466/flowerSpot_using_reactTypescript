@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../createSlice/authSlice";
 import flowerReducer from "../createSlice/flowerSlice";
+// import starBackgroundColorReducer from "../createSlice/starBackgroundColorSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     flower: flowerReducer,
+    // starBackgroundColor: starBackgroundColorReducer,
   },
 });
 

@@ -18,7 +18,8 @@ import { isMobile, isBrowser } from "react-device-detect";
 import Header from "./Header";
 
 interface NavbarProps {
-  setProgressBar: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoading: boolean;
 }
 
 const Navbar: React.FC<NavbarProps> = (props) => {
@@ -28,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     { url: "/favoriteFlowers", label: "Favorites" },
   ];
 
-  const { setProgressBar } = props;
+  const { setIsLoading, isLoading } = props;
   const { pathname } = useLocation();
   // console.log("pathname :>> ", pathname);
   const dispatch = useAppDispatch();
@@ -47,16 +48,13 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [toggleLoginSuccessModal, setToggleLoginSuccessModal] =
     useState<boolean>(false);
   const [profile, setProfile] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showDropdownMenu, setShowDropdownMenu] = useState<boolean>(false);
-
-  const onClickProfileIcon = () => {
-    setProfile(true);
-  };
+  console.log("toggleLoginSuccessModal => ", toggleLoginSuccessModal);
 
   const fetchUserInfo = async () => {
     setIsLoading(true);
-    setProgressBar(true);
+    // setProgressBar(true);
     try {
       const response = await axiosInstance.get(`users/me`);
       dispatch(setUserDetails(response.data.user));
@@ -64,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       console.log(error);
     } finally {
       setIsLoading(false);
-      setProgressBar(false);
+      // setProgressBar(false);
     }
   };
 
@@ -74,21 +72,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       fetchUserInfo();
     }
   }, [toggleLoginModal, userDetails]);
-
-  const clickHamburgerButton = () => {
-    setShowDropdownMenu(true);
-  };
-
-  const clickDropdownCancelButton = () => {
-    setShowDropdownMenu(false);
-  };
-
-  const clickDropdownRegister = () => {
-    setShowDropdownMenu(false);
-  };
-  const clickDropdownLogin = () => {
-    setShowDropdownMenu(false);
-  };
 
   console.log("isMobile :>> ", isMobile);
   console.log("isBrowser :>> ", isBrowser);
@@ -128,7 +111,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             </ul>
             <div className="flex items-center gap-2 sm:gap-5 ">
               {userDetails ? (
-                <div>
+                <div
+                  className="hover:cursor-pointer"
+                  onClick={() => setProfile(true)}
+                >
                   <p className="text-linear-gradient-dark">
                     {userDetails?.first_name}
                     {"  "}
@@ -147,7 +133,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               {userDetails ? (
                 <div
                   className="profile-img w-12 sm:mr-5 "
-                  onClick={onClickProfileIcon}
+                  onClick={() => setProfile(true)}
                 >
                   <img src={profileIcon} alt="" />
                 </div>
@@ -168,7 +154,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               className="inline-flex items-center p-2 w-10 h-10 justify-center mr-2 sm:mr-5 text-sm  text-gray-500 rounded-lg lg:hidden hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="navbar-default"
               aria-expanded="false"
-              onClick={clickHamburgerButton}
+              onClick={() => setShowDropdownMenu(true)}
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -205,7 +191,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                 className="w-8 rounded-lg mr-5 hover:cursor-pointer hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                 src={cancelIcon}
                 alt=""
-                onClick={clickDropdownCancelButton}
+                onClick={() => setShowDropdownMenu(false)}
               />
             </div>
             <ul className="flex flex-col gap-5  p-2 mt-5 rounded-lg">
@@ -235,7 +221,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                 to="/login"
                 className="text-gray-400 font-medium hover:text-linear-gradient-dark  p-2 rounded-lg ml-5"
                 // onClick={() => setShowDropdownMenu(false)}
-                onClick={clickDropdownLogin}
+                onClick={() => setShowDropdownMenu(false)}
               >
                 Login
               </NavLink>
@@ -243,7 +229,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                 to="/register"
                 className=" p-3 w-fit font-medium  bg-linear-gradient-dark text-white  rounded-full  ml-5"
                 // onClick={() => setShowDropdownMenu(false)}
-                onClick={clickDropdownRegister}
+                onClick={() => setShowDropdownMenu(false)}
               >
                 New Account
               </NavLink>

@@ -42,8 +42,8 @@ const Login: React.FC<LoginProps> = (props) => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       const response = await axiosInstance.post(`users/login`, data);
-      setToggleLoginModal(false);
       setToggleLoginSuccessModal(true);
+      setToggleLoginModal(false);
 
       localStorage.setItem("token", response.data.auth_token);
       // localStorage.setItem("userDetails", response.config.data);

@@ -16,7 +16,7 @@ import { setUserDetails } from "./redux/createSlice/authSlice";
 // import { isMobile } from "react-device-detect";
 
 function App() {
-  const [progressBar, setProgressBar] = useState<boolean>(false);
+  // const [progressBar, setProgressBar] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
 
@@ -27,19 +27,18 @@ function App() {
       dispatch(setUserDetails(JSON.parse(storedUserDetails)));
     }
     setIsLoading(false);
-  }, [dispatch]);
+  }, []);
 
-  if (isLoading) {
-    return <ProgressBar />;
-  }
-
+  // if (isLoading) {
+  //   return <ProgressBar />;
+  // }
   return (
     <>
-      {progressBar ? (
+      {isLoading ? (
         <ProgressBar />
       ) : (
         <BrowserRouter>
-          <Navbar setProgressBar={setProgressBar} />
+          <Navbar setIsLoading={setIsLoading} isLoading={isLoading} />
           <Toaster />
           <Routes>
             {routesForPublic.map((elem, index) => {

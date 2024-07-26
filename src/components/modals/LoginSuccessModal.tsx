@@ -23,6 +23,7 @@ const LoginSuccessModal: React.FC<LoginProps> = (props) => {
       backgroundColor: "#DF9186",
     },
   };
+  console.log("LoginSuccessModal :>> ");
   return (
     <>
       <div className="login-success-modal-container flex flex-col justify-center items-center">

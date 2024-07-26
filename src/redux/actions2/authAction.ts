@@ -15,7 +15,9 @@
 
 // export type UserActionTypes = SetUserDetailsAction | RemoveUserDetailsAction;
 
-// export const setUserDetails = (userDetails: UserDetails): SetUserDetailsAction => ({
+// export const setUserDetails = (
+//   userDetails: UserDetails
+// ): SetUserDetailsAction => ({
 //   type: SET_USER_DETAILS,
 //   payload: userDetails,
 // });
