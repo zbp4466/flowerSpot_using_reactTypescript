@@ -10,6 +10,7 @@ import axiosInstance from "../../config/http.config";
 import cancelIcon from "../../assets/image/cancel.svg";
 import { isBrowser, isMobile } from "react-device-detect";
 import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 interface FormData {
   email: string;
@@ -46,6 +47,7 @@ const Login: React.FC<LoginProps> = (props) => {
       setToggleLoginModal(false);
 
       localStorage.setItem("token", response.data.auth_token);
+
       // localStorage.setItem("userDetails", response.config.data);
 
       // setIsLoading(false);
@@ -167,13 +169,22 @@ const Login: React.FC<LoginProps> = (props) => {
               id="modal-title"
             >
               <p>OR</p>
-              <p
-                className="underline w-fit m-auto hover:text-linear-gradient-dark hover:cursor-pointer "
-                // onClick={() => setToggleLoginModal(false)}
-                onClick={onClickCreateNewAccount}
-              >
-                Create a new account
-              </p>
+              {isBrowser ? (
+                <p
+                  className="underline w-fit m-auto hover:text-linear-gradient-dark hover:cursor-pointer "
+                  // onClick={() => setToggleLoginModal(false)}
+                  onClick={onClickCreateNewAccount}
+                >
+                  Create a new account
+                </p>
+              ) : (
+                <NavLink
+                  className="underline w-fit m-auto hover:text-linear-gradient-dark hover:cursor-pointer "
+                  to="/register"
+                >
+                  Create a new account
+                </NavLink>
+              )}
             </div>
           </div>
         </div>

@@ -50,6 +50,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [profile, setProfile] = useState<boolean>(false);
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showDropdownMenu, setShowDropdownMenu] = useState<boolean>(false);
+  // const showModal = localStorage.getItem()
   console.log("toggleLoginSuccessModal => ", toggleLoginSuccessModal);
 
   const fetchUserInfo = async () => {
@@ -101,7 +102,11 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                   <li key={index}>
                     <NavLink
                       to={elem.url}
-                      className={` block  rounded  md:hover:text-linear-gradient-dark  dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent`}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-linear-gradient-dark  rounded md:hover:text-linear-gradient-dark dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                          : "block rounded md:hover:text-linear-gradient-dark dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                      }
                     >
                       {elem.label}
                     </NavLink>
@@ -238,7 +243,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         )}
       </nav>
       {/* <Header /> */}
-      {isMobile
+      {/* {isMobile
         ? pathname === "/register" && (
             <Register
               setToggleRegisterModal={setToggleRegisterModal}
@@ -256,8 +261,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                 />
               }
             />
-          )}
-      {/* {isBrowser && toggleRegisterModal && (
+          )} */}
+      {isBrowser && toggleRegisterModal && (
         <CommonModal
           body={
             <Register
@@ -267,7 +272,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             />
           }
         />
-      )} */}
+      )}
       {toggleRegisterSuccessModal && (
         <CommonModal
           body={
@@ -278,7 +283,29 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           }
         />
       )}
-      {/* {isBrowser && toggleLoginModal && (
+
+      {/* {isMobile
+        ? pathname === "/login" && (
+          <Login
+          setToggleLoginModal={setToggleLoginModal}
+          setToggleLoginSuccessModal={setToggleLoginSuccessModal}
+          setToggleRegisterModal={setToggleRegisterModal}
+          setToggleForgotPasswordModal={setToggleForgotPasswordModal}
+          />
+          )
+          : toggleLoginModal && (
+            <CommonModal
+            body={
+              <Login
+              setToggleLoginModal={setToggleLoginModal}
+              setToggleLoginSuccessModal={setToggleLoginSuccessModal}
+              setToggleRegisterModal={setToggleRegisterModal}
+              setToggleForgotPasswordModal={setToggleForgotPasswordModal}
+              />
+              }
+              />
+              )} */}
+      {isBrowser && toggleLoginModal && (
         <CommonModal
           body={
             <Login
@@ -289,29 +316,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             />
           }
         />
-      )} */}
-
-      {isMobile
-        ? pathname === "/login" && (
-            <Login
-              setToggleLoginModal={setToggleLoginModal}
-              setToggleLoginSuccessModal={setToggleLoginSuccessModal}
-              setToggleRegisterModal={setToggleRegisterModal}
-              setToggleForgotPasswordModal={setToggleForgotPasswordModal}
-            />
-          )
-        : toggleLoginModal && (
-            <CommonModal
-              body={
-                <Login
-                  setToggleLoginModal={setToggleLoginModal}
-                  setToggleLoginSuccessModal={setToggleLoginSuccessModal}
-                  setToggleRegisterModal={setToggleRegisterModal}
-                  setToggleForgotPasswordModal={setToggleForgotPasswordModal}
-                />
-              }
-            />
-          )}
+      )}
       {toggleLoginSuccessModal && (
         <CommonModal
           body={

@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     const storedUserDetails = localStorage.getItem("userDetails");
-
+    console.log("storedUserDetails :>> ", storedUserDetails);
     if (storedUserDetails) {
       dispatch(setUserDetails(JSON.parse(storedUserDetails)));
     }
@@ -32,6 +32,7 @@ function App() {
   // if (isLoading) {
   //   return <ProgressBar />;
   // }
+
   return (
     <>
       {isLoading ? (

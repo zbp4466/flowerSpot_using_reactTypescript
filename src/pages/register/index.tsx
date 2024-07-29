@@ -14,6 +14,7 @@ import {
   isBrowser,
   isMobile,
 } from "react-device-detect";
+import { NavLink } from "react-router-dom";
 
 interface FormData {
   first_name: string;
@@ -189,13 +190,22 @@ const Register: React.FC<LoginProps> = (props) => {
               id="modal-title "
             >
               <p>OR</p>
-              <p
-                className="w-fit m-auto underline  hover:text-linear-gradient-dark hover:cursor-pointer "
-                // onClick={() => setToggleRegisterModal(false)}
-                onClick={onClickAlreadyHaveAccount}
-              >
-                Already have an account ?
-              </p>
+              {isBrowser ? (
+                <p
+                  className="w-fit m-auto underline  hover:text-linear-gradient-dark hover:cursor-pointer "
+                  // onClick={() => setToggleRegisterModal(false)}
+                  onClick={onClickAlreadyHaveAccount}
+                >
+                  Already have an account ?
+                </p>
+              ) : (
+                <NavLink
+                  className="w-fit m-auto underline  hover:text-linear-gradient-dark hover:cursor-pointer "
+                  to="/login"
+                >
+                  Already have an account ?
+                </NavLink>
+              )}
             </div>
           </div>
         </div>
